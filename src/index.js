@@ -16,9 +16,10 @@ app.use((req, res) => {
     redirectDomain = `www.${req.get("host")}`;
 
   const proto = req.get("x-forwarded-proto") || req.protocol;
+  const path = req.originalUrl === '/' ? '' : req.originalUrl;
 
   if (redirectDomain)
-    return res.redirect(`${proto}://${redirectDomain}${req.originalUrl}`);
+    return res.redirect(`${proto}://${redirectDomain}${path}`);
   else if (req.path === "/status") return res.send("ok");
   else
     return res
